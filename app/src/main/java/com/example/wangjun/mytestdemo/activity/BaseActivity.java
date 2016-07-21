@@ -146,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         this.setTranslucentStatus(true);
         this.mTintManager = new SystemBarTintManager(this);
         this.mTintManager.setStatusBarTintEnabled(true);
-        this.mTintManager.setTintColor(this.getResources().getColor(R.color.hotpink));
+        this.mTintManager.setTintColor(this.getResources().getColor(R.color.limegreen));
     }
 
 

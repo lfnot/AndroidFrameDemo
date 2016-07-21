@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
         mIbRight.setVisibility(View.VISIBLE);
         mTvBack.setVisibility(View.INVISIBLE);
         setTitle("大王叫我来巡山");
-        setTitleBackground(R.color.hotpink);
+        setTitleBackground(R.color.limegreen);
     }
 
     /*@Override
