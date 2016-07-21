@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
             R.drawable.money_selector};
 
     //Tab选项卡的文字
-    private String mTextviewArray[] = {"云付", "酷购", "服务", "利是"};
+    private String mTextviewArray[] = {"首页", "便笺", "聊天", "我的"};
 
     @BindView(R.id.realtabcontent)
     FrameLayout mRealtabcontent;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         mIbRight.setVisibility(View.VISIBLE);
         mTvBack.setVisibility(View.INVISIBLE);
         setTitle("首页");
-        setTitleBackground(R.color.limegreen);
+        setTitleBackground(R.color.haijun);
     }
 
     /*@Override

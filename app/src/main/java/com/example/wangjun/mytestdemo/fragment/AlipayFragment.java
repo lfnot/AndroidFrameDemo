@@ -2,7 +2,6 @@ package com.example.wangjun.mytestdemo.fragment;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 
 import com.example.wangjun.mytestdemo.R;
 import com.example.wangjun.mytestdemo.utils.MyLog;
@@ -23,7 +22,9 @@ public class AlipayFragment extends BaseFragment {
         setContentView(R.layout.fragment_alipay,savedInstanceState);
 
         MyLog.d(TAG,"初始化");
-        setPostStringRequest("http:192.168.1.255","www.baidu.com");
+        setPostStringRequest("http:194.168.1.255","7778662555");
+
+
     }
 
     @Override

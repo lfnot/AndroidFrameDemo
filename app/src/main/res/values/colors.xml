@@ -298,5 +298,6 @@
     <!-- 暗蓝色 -->
     <color name="navy">#000080</color>
     <!-- 海军色 -->
+    <color name="haijun">#00bb9c</color>
 
 </resources>
