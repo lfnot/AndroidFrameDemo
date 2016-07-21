@@ -38,7 +38,7 @@ import okhttp3.Response;
 /**
  * basic fragment
  */
-public abstract class Base1Fragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     private View rootView;//缓存Fragment view
     public Context mContext;//上下文
@@ -49,7 +49,7 @@ public abstract class Base1Fragment extends Fragment {
 
     protected MainHandler mHandler = new MainHandler();
 
-    protected Base1Fragment() {
+    protected BaseFragment() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,7 +124,6 @@ public abstract class Base1Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MyLog.d("onActivityCreated", "onActivityCreated");
-        initEvent();
         mRlError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,11 +198,6 @@ public abstract class Base1Fragment extends Fragment {
         Toast.makeText(mContext, id, Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * 初始化事件
-     */
-    protected abstract void initEvent();
 
 
     /**
@@ -422,10 +416,8 @@ public abstract class Base1Fragment extends Fragment {
     public void onResume() {
         super.onResume();
         MyLog.d("onResume", "onResume");
-        initResume();
     }
 
-    protected abstract void initResume();
 
     @Override
     public void onPause() {
