@@ -22,6 +22,7 @@ public class AlipayFragment extends BaseFragment {
         setContentView(R.layout.fragment_alipay,savedInstanceState);
 
         MyLog.d(TAG,"初始化");
+        //测试请求网络
         setPostStringRequest("http:194.168.1.255","7778662555");
 
 
