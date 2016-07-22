@@ -11,6 +11,5 @@
 - 能力有限，后期继续完善
 - 
 - 演示效果图
-- ![](https://github.com/leon2017/AndroidFrameDemo/blob/master/%E6%BC%94%E7%A4%BA%E5%9B%BE%E7%89%871.png)
-- ![](https://github.com/leon2017/AndroidFrameDemo/blob/master/%E6%BC%94%E7%A4%BA%E5%9B%BE%E7%89%872.png)
-- ![](https://github.com/leon2017/AndroidFrameDemo/blob/master/%E6%BC%94%E7%A4%BA%E5%9B%BE%E7%89%873.png)
+- ![](https://github.com/leon2017/AndroidFrameDemo/blob/master/%E6%BC%94%E7%A4%BA%E5%9B%BE%E7%89%874.png)
+
