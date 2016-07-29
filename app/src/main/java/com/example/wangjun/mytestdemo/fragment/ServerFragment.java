@@ -2,6 +2,7 @@ package com.example.wangjun.mytestdemo.fragment;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 
 import com.example.wangjun.mytestdemo.R;
 import com.example.wangjun.mytestdemo.utils.MyLog;
@@ -17,7 +18,7 @@ public class ServerFragment extends BaseFragment {
     public static final String TAG = "MoneyFragment";
 
     @Override
-    public void onFragmentCreate(Bundle savedInstanceState) {
+    public void onFragmentCreate(Bundle savedInstanceState,View rootView) {
 
         setContentView(R.layout.fragment_server,savedInstanceState);
         MyLog.d(TAG,"初始化");
@@ -50,12 +51,12 @@ public class ServerFragment extends BaseFragment {
     }
 
     @Override
-    protected void onNetSucess(String result) {
+    protected void onNetSucess(String result,int code) {
 
     }
 
     @Override
-    protected void onNetSucess(File file) {
+    protected void onNetSucess(File file,int code) {
 
     }
 

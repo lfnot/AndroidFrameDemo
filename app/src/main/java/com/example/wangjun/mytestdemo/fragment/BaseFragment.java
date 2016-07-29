@@ -44,7 +44,6 @@ public abstract class BaseFragment extends Fragment {
     public Context mContext;//上下文
     private RelativeLayout mRlError;
     private ProgressBar mBaseProgress;
-    private RelativeLayout mRlBefore;
     protected FrameLayout rootContent;
 
     protected MainHandler mHandler = new MainHandler();
@@ -72,8 +71,7 @@ public abstract class BaseFragment extends Fragment {
             rootContent = (FrameLayout) rootView.findViewById(R.id.content);
             mRlError = (RelativeLayout) rootView.findViewById(R.id.rl_error);
             mBaseProgress = (ProgressBar) rootView.findViewById(R.id.base_progress);
-            mRlBefore = (RelativeLayout) rootView.findViewById(R.id.rl_before);
-            onFragmentCreate(savedInstanceState);
+            onFragmentCreate(savedInstanceState,rootView);
             MyLog.d("onCreateView", "onCreateView");
         }
         //缓存的rootView需要判断是否已经被加过parent,如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -85,7 +83,7 @@ public abstract class BaseFragment extends Fragment {
         return rootView;
     }
 
-    public abstract void onFragmentCreate(Bundle savedInstanceState);
+    public abstract void onFragmentCreate(Bundle savedInstanceState,View rootView);
 
     @SuppressWarnings("unchecked")
     public <T extends View> T findView(int id) {
@@ -280,9 +278,9 @@ public abstract class BaseFragment extends Fragment {
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         rootContent.setVisibility(View.VISIBLE);
                         mRlError.setVisibility(View.GONE);
-                        mRlBefore.setVisibility(View.GONE);
+                        int code = response.code();
                         //请求成功
-                        onNetSucess(file);
+                        onNetSucess(file,code);
 
                     }
 
@@ -291,21 +289,17 @@ public abstract class BaseFragment extends Fragment {
                         super.onError(isFromCache, call, response, e);
                         rootContent.setVisibility(View.GONE);
                         mRlError.setVisibility(View.VISIBLE);
-                        mRlBefore.setVisibility(View.GONE);
                         //请求失败
                         onNetError();
-
                     }
 
                     @Override
                     public void onBefore(BaseRequest request) {
                         super.onBefore(request);
-                        rootContent.setVisibility(View.GONE);
-                        mRlBefore.setVisibility(View.VISIBLE);
+                        rootContent.setVisibility(View.VISIBLE);
                         mBaseProgress.setVisibility(View.VISIBLE);
                         //请求之前的调用
                         onNetBefore();
-
                     }
 
                     @Override
@@ -347,9 +341,9 @@ public abstract class BaseFragment extends Fragment {
         public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
             rootContent.setVisibility(View.VISIBLE);
             mRlError.setVisibility(View.GONE);
-            mRlBefore.setVisibility(View.GONE);
+            int code = response.code();
             //请求成功
-            onNetSucess(s);
+            onNetSucess(s,code);
         }
 
         @Override
@@ -357,7 +351,6 @@ public abstract class BaseFragment extends Fragment {
             super.onError(isFromCache, call, response, e);
             rootContent.setVisibility(View.GONE);
             mRlError.setVisibility(View.VISIBLE);
-            mRlBefore.setVisibility(View.GONE);
             //失败
             onNetError();
         }
@@ -365,8 +358,7 @@ public abstract class BaseFragment extends Fragment {
         @Override
         public void onBefore(BaseRequest request) {
             super.onBefore(request);
-            rootContent.setVisibility(View.GONE);
-            mRlBefore.setVisibility(View.VISIBLE);
+            rootContent.setVisibility(View.VISIBLE);
             mBaseProgress.setVisibility(View.VISIBLE);
             //请求之前的回调--可以用来显示对话框
             onNetBefore();
@@ -397,14 +389,14 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param result
      */
-    protected abstract void onNetSucess(String result);
+    protected abstract void onNetSucess(String result,int code);
 
     /**
      * 请求成功
      *
      * @param file
      */
-    protected abstract void onNetSucess(File file);
+    protected abstract void onNetSucess(File file ,int code);
 
     @Override
     public void onStart() {

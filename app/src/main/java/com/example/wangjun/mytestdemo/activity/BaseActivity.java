@@ -62,7 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected MainHandler mHandler = new MainHandler();
     private RelativeLayout mRlError;
     private ProgressBar mBaseProgress;
-    private RelativeLayout mRlBefore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         rootContent = (FrameLayout) window.findViewById(R.id.content);
         mRlError = (RelativeLayout) window.findViewById(R.id.rl_error);
         mBaseProgress = (ProgressBar) window.findViewById(R.id.base_progress);
-        mRlBefore = (RelativeLayout) window.findViewById(R.id.rl_before);
         mContext = this;
         MyApplication.application.addActivity(this);
         initMainListener();
@@ -364,7 +362,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     public void onResponse(boolean isFromCache, File file, Request request, @Nullable Response response) {
                         rootContent.setVisibility(View.VISIBLE);
                         mRlError.setVisibility(View.GONE);
-                        mRlBefore.setVisibility(View.GONE);
                         //请求成功
                         onNetSucess(file);
 
@@ -375,7 +372,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                         super.onError(isFromCache, call, response, e);
                         rootContent.setVisibility(View.GONE);
                         mRlError.setVisibility(View.VISIBLE);
-                        mRlBefore.setVisibility(View.GONE);
                         //请求失败
                         onNetError();
 
@@ -384,8 +380,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void onBefore(BaseRequest request) {
                         super.onBefore(request);
-                        rootContent.setVisibility(View.GONE);
-                        mRlBefore.setVisibility(View.VISIBLE);
+                        rootContent.setVisibility(View.VISIBLE);
                         mBaseProgress.setVisibility(View.VISIBLE);
                         //请求之前的调用
                         onNetBefore();
@@ -431,7 +426,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
             rootContent.setVisibility(View.VISIBLE);
             mRlError.setVisibility(View.GONE);
-            mRlBefore.setVisibility(View.GONE);
             //请求成功
             onNetSucess(s);
         }
@@ -441,7 +435,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             super.onError(isFromCache, call, response, e);
             rootContent.setVisibility(View.GONE);
             mRlError.setVisibility(View.VISIBLE);
-            mRlBefore.setVisibility(View.GONE);
             //失败
             onNetError();
         }
@@ -449,8 +442,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         @Override
         public void onBefore(BaseRequest request) {
             super.onBefore(request);
-            rootContent.setVisibility(View.GONE);
-            mRlBefore.setVisibility(View.VISIBLE);
+            rootContent.setVisibility(View.VISIBLE);
             mBaseProgress.setVisibility(View.VISIBLE);
             //请求之前的回调--可以用来显示对话框
             onNetBefore();

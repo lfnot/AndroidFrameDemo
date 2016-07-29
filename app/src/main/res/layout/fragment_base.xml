@@ -14,13 +14,6 @@
         android:layout_below="@+id/rl_main">
     </FrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_before"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rl_main"
-        android:background="@color/white"
-        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/rl_error"
