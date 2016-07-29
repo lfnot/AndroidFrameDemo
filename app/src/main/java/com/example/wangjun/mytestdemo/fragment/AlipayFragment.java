@@ -3,22 +3,20 @@ package com.example.wangjun.mytestdemo.fragment;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.wangjun.mytestdemo.R;
+import com.example.wangjun.mytestdemo.entity.WXNews;
 import com.example.wangjun.mytestdemo.http.API;
 import com.example.wangjun.mytestdemo.utils.MyLog;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lzy.okhttputils.OkHttpUtils;
-import com.lzy.okhttputils.request.PostRequest;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import okhttp3.Response;
 
 /**
  * 微信文章精选
@@ -28,23 +26,23 @@ public class AlipayFragment extends BaseFragment {
 
 
     public static final String TAG = "AlipayFragment";
-    @BindView(R.id.recyclerview_main)
-    XRecyclerView mRecyclerView;
+    private XRecyclerView mRecyclerView;
+    private List<String> bannerList = new ArrayList<>();
 
     @Override
-    public void onFragmentCreate(Bundle savedInstanceState,View rootView) {
+    public void onFragmentCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.fragment_alipay, savedInstanceState);
-        ButterKnife.bind(getActivity(),rootView);
+        mRecyclerView = (XRecyclerView) findViewById(R.id.recyclerview_main);
         MyLog.d(TAG, "初始化");
-        //initView();
+        initView();
         initData();
     }
 
     //初始化视图
     private void initView() {
 
-        GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 3);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
@@ -68,21 +66,24 @@ public class AlipayFragment extends BaseFragment {
     //初始化数据
     private void initData() {
         //请求网络
-        getNata(1,30);
+        getNata(1, 30);
     }
 
     /**
      * 网络请求
-     * @param curPage 当前页数
+     *
+     * @param curPage  当前页数
      * @param pageSize 每页返回的条目数
      */
-    private void getNata(int curPage ,int pageSize) {
-        PostRequest postRequest = OkHttpUtils.post(API.JHWX_API)
+    private void getNata(int curPage, int pageSize) {
+        OkHttpUtils.post(API.JHWX_API)
+                .tag(this)//
                 .params("pno", curPage + "")
                 .params("ps", pageSize + "")
                 .params("key", "ceb28e6fca6f7812e08401c78fada917")
-                .params("dtype", "json");
-        setPostParamsRequest(postRequest);
+                .params("dtype", "json")
+                .execute(new NetWorkCallBack<>(WXNews.ResultBean.class));
+
     }
 
     @Override
@@ -94,6 +95,20 @@ public class AlipayFragment extends BaseFragment {
     @Override
     protected void onAgainLoadNetData() {
 
+    }
+
+
+    @Override
+    protected <T> void onNetSucess(T t) {
+        WXNews.ResultBean resultBean = (WXNews.ResultBean) t;
+        int totalPage = resultBean.getTotalPage();
+        MyLog.d(TAG, "成功");
+        MyLog.d(TAG, "总页数" + totalPage);
+    }
+
+    @Override
+    protected File parseleFileResponse(Response response) {
+        return null;
     }
 
     @Override
@@ -108,12 +123,7 @@ public class AlipayFragment extends BaseFragment {
 
     @Override
     protected void onNetError() {
-        MyLog.d(TAG,"失败");
-    }
-
-    @Override
-    protected void onNetSucess(String result, int code) {
-        MyLog.d(TAG,"获取首页list结果："+result);
+        MyLog.d(TAG, "失败");
     }
 
     @Override
@@ -122,13 +132,4 @@ public class AlipayFragment extends BaseFragment {
     }
 
 
-
-
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }*/
 }

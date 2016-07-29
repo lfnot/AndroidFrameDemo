@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 /**
  * Created by wangjun on 2016/7/21.
@@ -126,5 +127,15 @@ public class ShowFragmentActivity extends BaseActivity {
     @Override
     protected void onNetSucess(File file) {
 
+    }
+
+    @Override
+    protected File parseleFileResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected String parseResponse(Response response) {
+        return null;
     }
 }

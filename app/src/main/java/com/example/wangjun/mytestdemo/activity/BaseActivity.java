@@ -43,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /*  private TitleToolbar titleToolbar;
       private ActionBar mActionBar;*/
     private boolean visible = true;
-    protected FrameLayout rootContent;
+    public FrameLayout rootContent;
     public RelativeLayout mRlMain;
     public ImageButton mIbBack;
     public ImageButton mIbRight;
@@ -60,8 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * UI Handler
      */
     protected MainHandler mHandler = new MainHandler();
-    private RelativeLayout mRlError;
-    private ProgressBar mBaseProgress;
+    public RelativeLayout mRlError;
+    public ProgressBar mBaseProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -394,8 +394,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                         //请求之后的调用
                         onNetAfter();
                     }
+
+                    @Override
+                    public File parseNetworkResponse(Response response) throws Exception {
+                        return parseleFileResponse(response);
+                    }
                 });
     }
+
+
 
     /**
      * 演示：
@@ -455,7 +462,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             //请求无论失败成功进行回调---可用关闭对话框
             onNetAfter();
         }
+
+        @Override
+        public String parseNetworkResponse(Response response) throws Exception {
+            return parseResponse(response);
+        }
     };
+
+
 
     //请求无论失败成功进行回调-
     protected abstract void onNetAfter();
@@ -481,6 +495,20 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @param file
      */
     protected abstract void onNetSucess(File file);
+
+    /**
+     * 子线程耗时操作
+     * @param response
+     * @return
+     */
+    protected abstract File parseleFileResponse(Response response);
+
+    /**
+     * 子线程耗时操作
+     * @param response
+     * @return
+     */
+    protected abstract String parseResponse(Response response);
 
 
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.example.wangjun.mytestdemo.utils.CallSystemUtil;
+import com.example.wangjun.mytestdemo.utils.ToastUtils;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.model.HttpHeaders;
 import com.lzy.okhttputils.model.HttpParams;
@@ -53,6 +54,8 @@ public class MyApplication extends Application {
                 //.setCookieStore(new PersistentCookieStore())                       //cookie持久化存储，如果cookie不过期，则一直有效
                 .addCommonHeaders(headers)                                         //设置全局公共头
                 .addCommonParams(params);                                          //设置全局公共参数
+
+        ToastUtils.init(this);
     }
 
     /**

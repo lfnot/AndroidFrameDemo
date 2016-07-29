@@ -21,6 +21,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity {
 
@@ -162,6 +163,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onNetSucess(File file) {
 
+    }
+
+    @Override
+    protected File parseleFileResponse(Response response) {
+        return null;
+    }
+
+    @Override
+    protected String parseResponse(Response response) {
+        return null;
     }
 
 

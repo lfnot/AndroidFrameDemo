@@ -2,12 +2,13 @@ package com.example.wangjun.mytestdemo.fragment;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.view.View;
 
 import com.example.wangjun.mytestdemo.R;
 import com.example.wangjun.mytestdemo.utils.MyLog;
 
 import java.io.File;
+
+import okhttp3.Response;
 
 /**
  * Created by wangjun on 2016/7/21.
@@ -17,7 +18,7 @@ public class MoneyFragment extends BaseFragment {
 
     public static final String TAG = "MoneyFragment";
     @Override
-    public void onFragmentCreate(Bundle savedInstanceState,View rootView) {
+    public void onFragmentCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.fragment_money,savedInstanceState);
         MyLog.d(TAG,"初始化");
@@ -35,6 +36,17 @@ public class MoneyFragment extends BaseFragment {
 
     }
 
+
+    @Override
+    protected <T> void onNetSucess(T t) {
+
+    }
+
+    @Override
+    protected File parseleFileResponse(Response response) {
+        return null;
+    }
+
     @Override
     protected void onNetAfter() {
 
@@ -50,10 +62,6 @@ public class MoneyFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void onNetSucess(String result,int code) {
-
-    }
 
     @Override
     protected void onNetSucess(File file,int code) {
