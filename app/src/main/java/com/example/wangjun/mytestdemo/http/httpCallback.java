@@ -55,6 +55,7 @@ public abstract class HttpCallback<T> extends AbsCallback<T> {
         OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
             @Override
             public void run() {
+                ToastUtils.init(OkHttpUtils.getContext());
                 ToastUtils.getInstance().showToast(error_code+reason);
             }
         });

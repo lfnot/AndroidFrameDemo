@@ -19,7 +19,7 @@
         app:selectedIndicatorColor="#585454"
         app:selectedIndicatorHeight="6dp"
         app:selectedIndicatorWidth="6dp"
-        app:unSelectedIndicatorColor="#99ffffff"
+        app:unSelectedIndicatorColor="#56D918"
         app:unSelectedIndicatorHeight="6dp"
         app:unSelectedIndicatorWidth="6dp"
         />

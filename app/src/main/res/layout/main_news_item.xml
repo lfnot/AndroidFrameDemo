@@ -5,12 +5,6 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray"
-        />
-
     <TextView
         android:id="@+id/tv_tab"
         android:layout_width="70dp"
@@ -32,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:text="『生活家』"
         android:textColor="@color/darkgrey"
-        android:textSize="9sp"/>
+        android:textSize="11sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,11 +59,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_title"
-                android:layout_marginTop="@dimen/space_15"
+                android:layout_marginTop="@dimen/space_10"
                 android:ellipsize="end"
                 android:lines="4"
                 android:text="a RecyclerView that implements pullrefresh , loadingmore and header featrues.you can use it like a standard RecyclerView. you don't need to implement a special adapter ."
                 android:textSize="@dimen/textSize12sp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/lightgray"
                 />
         </RelativeLayout>
 
