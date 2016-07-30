@@ -50,14 +50,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textSize18sp"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_right"
             android:layout_width="@dimen/space_24"
             android:layout_height="@dimen/space_24"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/space_7"
-            android:background="@mipmap/ic_right"/>
+            />
 
         <TextView
             android:id="@+id/tv_right"

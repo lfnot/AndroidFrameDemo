@@ -1,6 +1,7 @@
 package com.example.wangjun.mytestdemo.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -47,7 +48,8 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
 
-        mIbRight.setVisibility(View.INVISIBLE);
+        //mIbRight.setVisibility(View.INVISIBLE);
+        mIbRight.setImageResource(R.mipmap.icon_share);
         mTvRight.setVisibility(View.INVISIBLE);
         mTvBack.setVisibility(View.INVISIBLE);
         setTitleBackground(R.color.haijun);
@@ -151,7 +153,17 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onRightClick() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
 
+        intent.setType("text/plain");
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(Intent.createChooser(intent, getTitle()));
     }
 
     @Override

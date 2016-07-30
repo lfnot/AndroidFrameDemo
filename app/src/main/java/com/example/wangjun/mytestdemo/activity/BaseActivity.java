@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public FrameLayout rootContent;
     public RelativeLayout mRlMain;
     public ImageButton mIbBack;
-    public ImageButton mIbRight;
+    public ImageView mIbRight;
     public TextView mTvBack;
     public TextView mTvRight;
     public TextView mTvTitle;
@@ -67,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Window window = getWindow();
         mRlMain = (RelativeLayout) window.findViewById(R.id.rl_main);
         mIbBack = (ImageButton) window.findViewById(R.id.ib_back);
-        mIbRight = (ImageButton) window.findViewById(R.id.ib_right);
+        mIbRight = (ImageView) window.findViewById(R.id.ib_right);
         mTvBack = (TextView) window.findViewById(R.id.tv_back);
         mTvRight = (TextView) window.findViewById(R.id.tv_right);
         mTvTitle = (TextView) window.findViewById(R.id.tv_title);

@@ -70,7 +70,7 @@ public class AlipayFragment extends BaseFragment {
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-       // mHeader.attachTo(mRecyclerView);
+        // mHeader.attachTo(mRecyclerView);
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
                 .color(Color.TRANSPARENT)
                 .sizeResId(R.dimen.space_10)
@@ -146,7 +146,8 @@ public class AlipayFragment extends BaseFragment {
 
             if (null != bannerList) {
                 bannerList.clear();
-            }if (null != bannerList2) {
+            }
+            if (null != bannerList2) {
                 bannerList2.clear();
             }
             if (list.size() > 6) {
@@ -162,7 +163,7 @@ public class AlipayFragment extends BaseFragment {
                     mMainAdapter = new MainAdapter(list, mContext);
                     mRecyclerView.setAdapter(mMainAdapter);
 
-                break;
+                    break;
                 case STATE_REFREH:
                     mMainAdapter.clearData();
                     mMainAdapter.addData(list);
@@ -183,8 +184,8 @@ public class AlipayFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, WXNews.ResultBean.ListBean listBean) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("item",100);
-                bundle.putString("url",listBean.getUrl());
+                bundle.putInt("item", 100);
+                bundle.putString("url", listBean.getUrl());
                 Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -196,8 +197,8 @@ public class AlipayFragment extends BaseFragment {
             public void onItemClick(int position) {
                 if (null != bannerList2) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt("item",100);
-                    bundle.putString("url",bannerList2.get(position));
+                    bundle.putInt("item", 100);
+                    bundle.putString("url", bannerList2.get(position));
                     Intent intent = new Intent(mContext, WebViewActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -223,15 +224,13 @@ public class AlipayFragment extends BaseFragment {
     private void loadMoreData() {
         curPage = ++curPage;
         state = STATE_MORE;
-        getNata(curPage, curPage);
+        getNata(curPage, 30);
     }
 
     private void refreshData() {
-
         curPage = 1;
         state = STATE_REFREH;
         getNata(curPage, 30);
-        ;//加载列表
     }
 
     @Override
