@@ -105,6 +105,11 @@ public class ShowFragmentActivity extends BaseActivity {
     }
 
     @Override
+    protected <T> void onNetSucess(T t) {
+
+    }
+
+    @Override
     protected void onNetAfter() {
 
     }
@@ -119,10 +124,6 @@ public class ShowFragmentActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onNetSucess(String result) {
-
-    }
 
     @Override
     protected void onNetSucess(File file) {
@@ -134,8 +135,4 @@ public class ShowFragmentActivity extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected String parseResponse(Response response) {
-        return null;
-    }
 }

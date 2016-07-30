@@ -20,18 +20,15 @@ import android.widget.Toast;
 
 import com.example.wangjun.mytestdemo.MyApplication;
 import com.example.wangjun.mytestdemo.R;
+import com.example.wangjun.mytestdemo.http.HttpCallback;
 import com.example.wangjun.mytestdemo.utils.BaseContants;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.FileCallback;
-import com.lzy.okhttputils.callback.StringCallback;
 import com.lzy.okhttputils.request.BaseRequest;
-import com.lzy.okhttputils.request.GetRequest;
-import com.lzy.okhttputils.request.PostRequest;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import org.json.JSONObject;
-
 import java.io.File;
+import java.lang.reflect.Type;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -289,64 +286,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     //网络请求
 
-
-    /**
-     * 演示：
-     * HashMap<String, String> params = new HashMap<>();
-     * params.put("key1", "value1");
-     * params.put("key2", "这里是需要提交的json格式数据");
-     * params.put("key3", "也可以使用三方工具将对象转成json字符串");
-     * params.put("key4", "其实你怎么高兴怎么写都行");
-     * JSONObject jsonObject = new JSONObject(params);
-     * <p/>
-     * 普通Post，直接上传Json类型的文本
-     *
-     * @param url
-     * @param jsonObject
-     */
-    public void setPostJsonRequest(String url, JSONObject jsonObject) {
-
-        OkHttpUtils.post(url)
-                .tag(mContext)
-                .postJson(jsonObject.toString())
-                .execute(netCallBack);
-    }
-
-
-    /**
-     * 普通Post，直接上传String类型的文本
-     *
-     * @param url 请求的url
-     * @param str 直接上传的string
-     */
-    public void setPostStringRequest(String url, String str) {
-        OkHttpUtils.post(url)
-                .tag(mContext)
-                .postString(str)
-                .execute(netCallBack);
-    }
-
-    /**
-     * 演示：
-     * PostRequest post.headers("header1", "headerValue1")     // 添加请求头参数
-     * .headers("header2", "headerValue2")     // 支持多请求头参数同时添加
-     * .params("param1", "paramValue1")        // 添加请求参数
-     * .params("param2", "paramValue2")        // 支持多请求参数同时添加
-     * .params("file1", new File("filepath1")) // 可以添加文件上传
-     * .params("file2", new File("filepath2")) // 支持多文件同时添加上传
-     * .addUrlParams("key", List<String> values)                                   //这里支持一个key传多个参数
-     * .addFileParams("key", List<File> files)                                     //这里支持一个key传多个文件
-     * .addFileWrapperParams("key", List<HttpParams.FileWrapper> fileWrappers)     //这里支持一个key传多个文件
-     * 带有请求头以及params参数的post请求
-     *
-     * @param post
-     */
-    public void setPostParamsRequest(PostRequest post) {
-
-        post.execute(netCallBack);
-    }
-
-
     /**
      * 请求 文件下载--这里请求的是图片下载
      *
@@ -403,47 +342,22 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
 
+    protected class NetWorkCallBack<T> extends HttpCallback<T> {
 
-    /**
-     * 演示：
-     * GetRequest getRequest.headers("header1", "headerValue1")     // 添加请求头参数
-     * .headers("header2", "headerValue2")     // 支持多请求头参数同时添加
-     * .params("param1", "paramValue1")        // 添加请求参数
-     * .params("param2", "paramValue2")        // 支持多请求参数同时添加
-     * .params("file1", new File("filepath1")) // 可以添加文件上传
-     * .params("file2", new File("filepath2")) // 支持多文件同时添加上传
-     * .addUrlParams("key", List<String> values)                                   //这里支持一个key传多个参数
-     * .addFileParams("key", List<File> files)                                     //这里支持一个key传多个文件
-     * .addFileWrapperParams("key", List<HttpParams.FileWrapper> fileWrappers)     //这里支持一个key传多个文件
-     * 带有header以及params等请求参数的get请求
-     *
-     * @param getRequest
-     */
-    public void setGetParamsRequest(GetRequest getRequest) {
+        public NetWorkCallBack(Class<T> clazz) {
+            super(clazz);
+        }
 
-        getRequest.execute(netCallBack);
-    }
-
-
-    /**
-     * 请求的回调
-     */
-    private StringCallback netCallBack = new StringCallback() {
-        @Override
-        public void onResponse(boolean isFromCache, String s, Request request, @Nullable Response response) {
-            rootContent.setVisibility(View.VISIBLE);
-            mRlError.setVisibility(View.GONE);
-            //请求成功
-            onNetSucess(s);
+        public NetWorkCallBack(Type type) {
+            super(type);
         }
 
         @Override
-        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-            super.onError(isFromCache, call, response, e);
-            rootContent.setVisibility(View.GONE);
-            mRlError.setVisibility(View.VISIBLE);
-            //失败
-            onNetError();
+        public void onResponse(boolean isFromCache, T t, Request request, @Nullable Response response) {
+            rootContent.setVisibility(View.VISIBLE);
+            mRlError.setVisibility(View.GONE);
+            //请求成功
+            onNetSucess(t);
         }
 
         @Override
@@ -456,19 +370,25 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
 
         @Override
-        public void onAfter(boolean isFromCache, @Nullable String s, Call call, @Nullable Response response, @Nullable Exception e) {
-            super.onAfter(isFromCache, s, call, response, e);
+        public void onAfter(boolean isFromCache, @Nullable T t, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onAfter(isFromCache, t, call, response, e);
             mBaseProgress.setVisibility(View.GONE);
             //请求无论失败成功进行回调---可用关闭对话框
             onNetAfter();
         }
 
         @Override
-        public String parseNetworkResponse(Response response) throws Exception {
-            return parseResponse(response);
+        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            super.onError(isFromCache, call, response, e);
+            rootContent.setVisibility(View.GONE);
+            mRlError.setVisibility(View.VISIBLE);
+            //失败
+            onNetError();
         }
-    };
+    }
 
+    //请求成功的回调
+    protected abstract <T> void onNetSucess(T t);
 
 
     //请求无论失败成功进行回调-
@@ -485,13 +405,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 请求成功
      *
-     * @param result
-     */
-    protected abstract void onNetSucess(String result);
-
-    /**
-     * 请求成功
-     *
      * @param file
      */
     protected abstract void onNetSucess(File file);
@@ -503,12 +416,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     protected abstract File parseleFileResponse(Response response);
 
-    /**
-     * 子线程耗时操作
-     * @param response
-     * @return
-     */
-    protected abstract String parseResponse(Response response);
+
 
 
 }

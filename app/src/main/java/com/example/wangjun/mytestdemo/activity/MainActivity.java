@@ -137,6 +137,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected <T> void onNetSucess(T t) {
+
+    }
+
     /*****************************
      * 以下是网络请求的结果
      ***********************/
@@ -156,11 +161,6 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onNetSucess(String result) {
-        showToast("成功");
-    }
-
-    @Override
     protected void onNetSucess(File file) {
 
     }
@@ -170,16 +170,5 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected String parseResponse(Response response) {
-        return null;
-    }
 
-
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }*/
 }

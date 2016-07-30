@@ -1,5 +1,6 @@
 package com.example.wangjun.mytestdemo.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
@@ -7,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.wangjun.mytestdemo.R;
+import com.example.wangjun.mytestdemo.activity.WebViewActivity;
 import com.example.wangjun.mytestdemo.adapter.MainAdapter;
 import com.example.wangjun.mytestdemo.entity.WXNews;
 import com.example.wangjun.mytestdemo.http.API;
@@ -34,6 +37,7 @@ public class AlipayFragment extends BaseFragment {
     public static final String TAG = "AlipayFragment";
     private XRecyclerView mRecyclerView;
     private List<String> bannerList = new ArrayList<>();
+    private List<String> bannerList2 = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private LayoutInflater mInflater;
     private BannerLayout mBannerLayout;
@@ -43,12 +47,16 @@ public class AlipayFragment extends BaseFragment {
     public static final int STATE_REFREH = 1;
     public static final int STATE_MORE = 2;
     private int state = STATE_NORMAL;
+    private RecyclerViewHeader mHeader;
+    private boolean isHeader = true;
 
     @Override
     public void onFragmentCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.fragment_alipay, savedInstanceState);
+        //mHeader = (RecyclerViewHeader) findViewById(R.id.header);
         mRecyclerView = (XRecyclerView) findViewById(R.id.recyclerview_main);
+        //mBannerLayout = (BannerLayout)findViewById(R.id.banner_main);
         MyLog.d(TAG, "初始化");
         initView();
         initData();
@@ -62,11 +70,13 @@ public class AlipayFragment extends BaseFragment {
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
+       // mHeader.attachTo(mRecyclerView);
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
                 .color(Color.TRANSPARENT)
                 .sizeResId(R.dimen.space_10)
                 .marginResId(R.dimen.space_1, R.dimen.space_1)
                 .build());
+//        mRecyclerView.setRefreshing(false);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             //刷新
             @Override
@@ -81,6 +91,7 @@ public class AlipayFragment extends BaseFragment {
                     loadMoreData();
                 } else {
                     //不做处理
+                    //mRecyclerView.setNoMore(true);
                     mRecyclerView.loadMoreComplete();
                 }
             }
@@ -91,6 +102,8 @@ public class AlipayFragment extends BaseFragment {
     private void initData() {
         //请求网络
         getNata(1, 30);
+
+
     }
 
     /**
@@ -133,10 +146,13 @@ public class AlipayFragment extends BaseFragment {
 
             if (null != bannerList) {
                 bannerList.clear();
+            }if (null != bannerList2) {
+                bannerList2.clear();
             }
             if (list.size() > 6) {
                 for (int i = 1; i < 6; i++) {
                     bannerList.add(list.get(i).getFirstImg());
+                    bannerList2.add(list.get(i).getUrl());
                 }
                 showBanner();
             }
@@ -145,20 +161,49 @@ public class AlipayFragment extends BaseFragment {
                 case STATE_NORMAL:
                     mMainAdapter = new MainAdapter(list, mContext);
                     mRecyclerView.setAdapter(mMainAdapter);
-                    break;
+
+                break;
                 case STATE_REFREH:
                     mMainAdapter.clearData();
                     mMainAdapter.addData(list);
+                    mMainAdapter.notifyDataSetChanged();
                     mRecyclerView.refreshComplete();
                     break;
                 case STATE_MORE:
                     mMainAdapter.addData(mMainAdapter.getDatas().size(), list);
                     //mMainAdapter.notifyDataSetChanged();
+                    mMainAdapter.notifyDataSetChanged();
                     mRecyclerView.loadMoreComplete();
                     break;
             }
 
         }
+
+        mMainAdapter.setOnItemClickListener(new MainAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, WXNews.ResultBean.ListBean listBean) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("item",100);
+                bundle.putString("url",listBean.getUrl());
+                Intent intent = new Intent(mContext, WebViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        mBannerLayout.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (null != bannerList2) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("item",100);
+                    bundle.putString("url",bannerList2.get(position));
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
 
         MyLog.d(TAG, "成功");
         MyLog.d(TAG, "总页数" + totalPage);
@@ -166,9 +211,12 @@ public class AlipayFragment extends BaseFragment {
 
     private void showBanner() {
         mInflater = LayoutInflater.from(mContext);
-        View view = mInflater.inflate(R.layout.banner_item, null);
-        mBannerLayout = (BannerLayout) view.findViewById(R.id.banner_main);
-        mRecyclerView.addHeaderView(view);
+        if (isHeader) {//防止刷新后重复加载
+            View view = mInflater.inflate(R.layout.banner_item, null);
+            mBannerLayout = (BannerLayout) view.findViewById(R.id.banner_main);
+            mRecyclerView.addHeaderView(view);
+            isHeader = false;
+        }
         mBannerLayout.setViewUrls(bannerList);
     }
 

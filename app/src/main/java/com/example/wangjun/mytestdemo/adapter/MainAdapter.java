@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.example.wangjun.mytestdemo.MyApplication;
 import com.example.wangjun.mytestdemo.R;
 import com.example.wangjun.mytestdemo.entity.WXNews;
 
@@ -23,10 +23,11 @@ import java.util.Random;
  * Discription:
  * E-mail :lijiawangjun@gmail.com
  */
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> implements View.OnClickListener {
 
     private List<WXNews.ResultBean.ListBean> mData = null;
     private Context mContext ;
+    public OnRecyclerViewItemClickListener mOnItemClickListener;
 
     public MainAdapter(List<WXNews.ResultBean.ListBean> data,Context context) {
         this.mData = data;
@@ -40,7 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     public void addData(List<WXNews.ResultBean.ListBean> data){
-        addData(1,data);
+        addData(0,data);
     }
 
     public void addData(int position ,List<WXNews.ResultBean.ListBean> data){
@@ -59,6 +60,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_news_item, parent, false);
+        //将创建的View注册点击事件
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -81,12 +84,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
 
         holder.mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(mContext).load(listBean.getFirstImg()).into(holder.mImageView);
+        MyApplication.setImage(mContext,holder.mImageView,listBean.getFirstImg());
+        //将数据保存在itemView的Tag中，以便点击时进行获取
+        holder.itemView.setTag(listBean);
+        //Glide.with(mContext).load(listBean.getFirstImg()).into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(v,(WXNews.ResultBean.ListBean)v.getTag());
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -99,7 +113,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             mTvTab = (TextView) itemView.findViewById(R.id.tv_tab);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             mTvDesc = (TextView) itemView.findViewById(R.id.tv_desc);
@@ -118,6 +131,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }else {
             view.setBackgroundColor(Color.rgb(red, green, blue));
         }
+    }
+
+    public static interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view , WXNews.ResultBean.ListBean listBean);
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
 }

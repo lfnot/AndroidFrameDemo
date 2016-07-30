@@ -3,7 +3,10 @@ package com.example.wangjun.mytestdemo;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.wangjun.mytestdemo.utils.CallSystemUtil;
 import com.example.wangjun.mytestdemo.utils.ToastUtils;
 import com.lzy.okhttputils.OkHttpUtils;
@@ -56,6 +59,11 @@ public class MyApplication extends Application {
                 .addCommonParams(params);                                          //设置全局公共参数
 
         ToastUtils.init(this);
+    }
+
+
+    public static void setImage(Context context,ImageView image, String url){
+        Glide.with(context).load(url).into(image);
     }
 
     /**
