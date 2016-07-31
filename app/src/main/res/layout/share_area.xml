@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="30dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_share_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="17dp"
+        android:text="分享到"
+        android:textColor="#888888"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_wechat"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_wechat"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_wechat" />
+
+            <TextView
+                android:id="@+id/tv_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/ssdk_wechat"
+                android:textColor="#888888"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_wechat_moments"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_wechat_moments"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_wechatmoments" />
+
+            <TextView
+                android:id="@+id/tv_wechat_moments"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/ssdk_wechatmoments"
+                android:textColor="#888888"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_short_message"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_short_message"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_shortmessage" />
+
+            <TextView
+                android:id="@+id/tv_short_message"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/ssdk_shortmessage"
+                android:textColor="#888888"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_qq"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_qq"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_qq" />
+
+            <TextView
+                android:id="@+id/tv_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="#888888"
+                android:text="@string/ssdk_qq"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_qzone"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_qzone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_qzone" />
+
+            <TextView
+                android:id="@+id/tv_qzone"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="#888888"
+                android:text="@string/ssdk_qzone"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_weibo"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/ibtn_weibo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ssdk_oks_classic_sinaweibo" />
+
+            <TextView
+                android:id="@+id/tv_weibo"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="#888888"
+                android:text="@string/ssdk_sinaweibo"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:background="@drawable/bg_border_red_style"
+        android:text="更多分享..."
+        android:textColor="#ff0000"
+        android:textSize="16dp"
+        android:gravity="center"
+        />
+
+</LinearLayout>
+
+

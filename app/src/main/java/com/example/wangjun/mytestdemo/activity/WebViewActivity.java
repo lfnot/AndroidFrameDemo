@@ -1,9 +1,9 @@
 package com.example.wangjun.mytestdemo.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -13,11 +13,13 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.example.wangjun.mytestdemo.R;
+import com.example.wangjun.mytestdemo.share.CustomShare;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.ShareSDK;
 import okhttp3.Response;
 
 /**
@@ -37,12 +39,17 @@ public class WebViewActivity extends BaseActivity {
 
     // html
     private String content;
+    private String imageUrl;
+    private String title;
+    private String source;
     private WebSettings mWebSettings;
+    private CustomShare mShareBoard;
 
     @Override
     protected void onActivityCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
+        ShareSDK.initSDK(mContext);
     }
 
     @Override
@@ -70,9 +77,14 @@ public class WebViewActivity extends BaseActivity {
         if (item == 100) {
             setTitle("微信精选");
             String url = bundle.getString("url");
+            imageUrl = bundle.getString("imageUrl");
+            title = bundle.getString("title");
+            source = bundle.getString("content");
             if (null != url) {
                 content = url;
             }
+
+
         }
 
         // 设置支持JavaScript等
@@ -123,7 +135,6 @@ public class WebViewActivity extends BaseActivity {
         });
 
 
-
         // 覆盖默认后退按钮的作用，替换成WebView里的查看历史页面
         mWebview.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -139,7 +150,7 @@ public class WebViewActivity extends BaseActivity {
         });
 
         // js处理
-       // mWebview.addJavascriptInterface(this, "jsjtrips");
+        // mWebview.addJavascriptInterface(this, "jsjtrips");
 
         mWebview.loadUrl(this.content);
         //mWebview.loadDataWithBaseURL(null, this.content, "text/html", "utf-8", null);
@@ -153,17 +164,20 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onRightClick() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
 
-        intent.setType("text/plain");
+        //分享
+        showSharePopWindow();
 
-        intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+    }
 
-        intent.putExtra(Intent.EXTRA_TEXT, content);
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(Intent.createChooser(intent, getTitle()));
+    private void showSharePopWindow() {
+        mShareBoard = new CustomShare(mContext);
+//        mShareBoard.setPlatformActionListener(WebViewActivity.this);
+        mShareBoard.setTitle(title + "");
+        mShareBoard.setText("微信精选");
+        mShareBoard.setUrl(content);
+        mShareBoard.setImageUrl(imageUrl);
+        mShareBoard.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
@@ -220,6 +234,7 @@ public class WebViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mWebview.setVisibility(View.GONE);
+        ShareSDK.stopSDK(this);
     }
 
 

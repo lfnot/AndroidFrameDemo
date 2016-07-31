@@ -37,7 +37,7 @@ public class AlipayFragment extends BaseFragment {
     public static final String TAG = "AlipayFragment";
     private XRecyclerView mRecyclerView;
     private List<String> bannerList = new ArrayList<>();
-    private List<String> bannerList2 = new ArrayList<>();
+    private List<WXNews.ResultBean.ListBean> bannerList2 = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private LayoutInflater mInflater;
     private BannerLayout mBannerLayout;
@@ -153,7 +153,7 @@ public class AlipayFragment extends BaseFragment {
             if (list.size() > 6) {
                 for (int i = 1; i < 6; i++) {
                     bannerList.add(list.get(i).getFirstImg());
-                    bannerList2.add(list.get(i).getUrl());
+                    bannerList2.add(list.get(i));
                 }
                 showBanner();
             }
@@ -187,6 +187,9 @@ public class AlipayFragment extends BaseFragment {
                 bundle.putInt("item", 100);
                 bundle.putString("url", listBean.getUrl());
                 Intent intent = new Intent(mContext, WebViewActivity.class);
+                bundle.putString("imageUrl",listBean.getFirstImg());
+                bundle.putString("title",listBean.getTitle());
+                bundle.putString("content",listBean.getSource());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -198,7 +201,10 @@ public class AlipayFragment extends BaseFragment {
                 if (null != bannerList2) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("item", 100);
-                    bundle.putString("url", bannerList2.get(position));
+                    bundle.putString("url", bannerList2.get(position).getUrl());
+                    bundle.putString("imageUrl",bannerList2.get(position).getFirstImg());
+                    bundle.putString("title",bannerList2.get(position).getTitle());
+                    bundle.putString("content",bannerList2.get(position).getSource());
                     Intent intent = new Intent(mContext, WebViewActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);

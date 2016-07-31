@@ -2,6 +2,17 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
+
+    signingConfigs {//这是应用的签名，签名已经放在工程根目录
+        config {
+            keyAlias 'jitang'
+            keyPassword 'wj8569075'
+            storeFile file('E:/jitang.jks')
+            storePassword 'wj8569075'
+        }
+
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
@@ -48,4 +59,16 @@ dependencies {
     compile 'com.android.support:design:24.1.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
+    compile files('libs/MobCommons-2016.0707.1708.jar')
+    compile files('libs/MobTools-2016.0707.1708.jar')
+    compile files('libs/ShareSDK-Core-2.7.4.jar')
+    compile files('libs/ShareSDK-Email-2.7.4.jar')
+    compile files('libs/ShareSDK-QQ-2.7.4.jar')
+    compile files('libs/ShareSDK-QZone-2.7.4.jar')
+    compile files('libs/ShareSDK-ShortMessage-2.7.4.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.4.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.4.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.4.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.4.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.4.jar')
 }
