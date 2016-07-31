@@ -22,6 +22,7 @@ public class ServerFragment extends BaseFragment {
     public void onFragmentCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.fragment_server,savedInstanceState);
+
         MyLog.d(TAG,"初始化");
     }
 
@@ -65,5 +66,7 @@ public class ServerFragment extends BaseFragment {
     protected void onNetSucess(File file,int code) {
 
     }
+
+
 
 }

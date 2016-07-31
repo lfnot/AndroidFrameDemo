@@ -11,5 +11,7 @@ public class API {
 
     //聚合数据--微信精品文章api
     public static final String JHWX_API = "http://v.juhe.cn/weixin/query";
+    //图灵机器人api
+    public static final String ROBOT_API = "http://www.tuling123.com/openapi/api";
 
 }
