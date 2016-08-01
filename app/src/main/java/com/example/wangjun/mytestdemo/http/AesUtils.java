@@ -16,7 +16,7 @@ import com.example.wangjun.mytestdemo.utils.PostServer;
 public class AesUtils {
 	
 
-	public String  Aes(String secrets,String apikeys ,String name){
+	public static  String  Aes(String secrets,String apikeys ,String name){
 		//图灵网站上的secret
 		String secret = secrets;
 		//图灵网站上的apiKey
@@ -32,15 +32,15 @@ public class AesUtils {
 		//加密
 		Aes mc = new Aes(key);
 		data = mc.encrypt(data);
-		//封装请求参数
+		/*//封装请求参数
 		JSONObject json = new JSONObject();
 		json.put("key", apiKey);
 		json.put("timestamp", timestamp);
 		json.put("data", data);
 		//请求图灵api
-		String result = PostServer.SendPost(json.toString(), "http://www.tuling123.com/openapi/api");
-		System.out.println(result);
-		return result;
+		String result = PostServer.SendPost(json.toString(), "http://www.tuling123.com/openapi/api");*/
+		System.out.println(data+"");
+		return data;
 	}
 	
 }

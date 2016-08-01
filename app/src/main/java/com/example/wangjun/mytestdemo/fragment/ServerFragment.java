@@ -2,6 +2,7 @@ package com.example.wangjun.mytestdemo.fragment;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AbsListView;
@@ -13,15 +14,25 @@ import com.example.wangjun.mytestdemo.R;
 import com.example.wangjun.mytestdemo.adapter.ChatMessageAdapter;
 import com.example.wangjun.mytestdemo.entity.MessageEntity;
 import com.example.wangjun.mytestdemo.http.API;
+import com.example.wangjun.mytestdemo.http.AesUtils;
 import com.example.wangjun.mytestdemo.utils.KeyBoardUtil;
 import com.example.wangjun.mytestdemo.utils.MyLog;
 import com.example.wangjun.mytestdemo.utils.TimeUtil;
+import com.example.wangjun.mytestdemo.utils.ToastUtils;
+import com.google.gson.Gson;
 import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.AbsCallback;
+
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -81,28 +92,47 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
         });
     }
 
-    private void getNetData(String info) {
-        OkHttpUtils.post(API.TULING_API)
-                .params("key","c557cf19d2b30fb7b543cf107460009c")
-                .params("info",info)
-                .params("dtype", "json")
-                .execute(new NetWorkCallBack<Object>(MessageEntity.class));
+    private void getNetData(final String info) {
+
+        String data = AesUtils.Aes(API.TULING_SECRET, API.TULING_KEY, info);
+        try {
+            OkHttpUtils.post(API.TULING_API)
+                    .params("key",API.TULING_KEY)
+                    .params("info", URLEncoder.encode(info,"UTF-8"))
+                    .execute(new AbsCallback<MessageEntity>() {
+                        @Override
+                        public MessageEntity parseNetworkResponse(Response response) throws Exception {
+                            String responseData = response.body().string();
+                            if (TextUtils.isEmpty(responseData)) return null;
+                            JSONObject jsonObject = new JSONObject(responseData);
+                            final int code = jsonObject.optInt("code", 100000);
+                            final String reason = jsonObject.optString("text", "");
+                            String substring = String.valueOf(code).substring(0, 1);
+                            MessageEntity messageEntity = new Gson().fromJson(responseData, MessageEntity.class);
+                            return messageEntity;
+                        }
+
+                        @Override
+                        public void onResponse(boolean isFromCache, MessageEntity messageEntity, Request request, @Nullable Response response) {
+
+                            parseData(messageEntity);
+                        }
+
+                        @Override
+                        public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                            super.onError(isFromCache, call, response, e);
+
+                        }
+
+
+                    });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    protected void onHandleMessage(Message msg) {
+    private void parseData(MessageEntity messageEntity) {
 
-    }
-
-
-    @Override
-    protected void onAgainLoadNetData() {
-
-    }
-
-    @Override
-    protected <T> void onNetSucess(T t) {
-        MessageEntity messageEntity = (MessageEntity) t;
         if (messageEntity ==null ) return;
         messageEntity.setTime(TimeUtil.getCurrentTimeMillis());
         messageEntity.setType(ChatMessageAdapter.TYPE_LEFT);
@@ -118,6 +148,21 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
 
         msgList.add(messageEntity);
         msgAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onHandleMessage(Message msg) {
+    }
+
+
+    @Override
+    protected void onAgainLoadNetData() {
+
+    }
+
+    @Override
+    protected <T> void onNetSucess(T t) {
+
     }
 
     @Override

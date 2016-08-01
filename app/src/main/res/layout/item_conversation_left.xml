@@ -58,7 +58,7 @@
                 app:arrowLocation="left"
                 app:arrowPosition="14dp"
                 app:arrowWidth="8dp"
-                app:bubbleColor="@color/darkgreen"/>
+                app:bubbleColor="@color/mediumaquamarine"/>
 
         </LinearLayout>
 
