@@ -31,10 +31,10 @@ import okhttp3.Response;
  * 微信文章精选
  * Created by wangjun on 2016/7/21.
  */
-public class AlipayFragment extends BaseFragment {
+public class Maingment extends BaseFragment {
 
 
-    public static final String TAG = "AlipayFragment";
+    public static final String TAG = "Maingment";
     private XRecyclerView mRecyclerView;
     private List<String> bannerList = new ArrayList<>();
     private List<WXNews.ResultBean.ListBean> bannerList2 = new ArrayList<>();

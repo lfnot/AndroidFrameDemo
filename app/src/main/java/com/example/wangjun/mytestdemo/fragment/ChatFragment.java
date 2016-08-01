@@ -38,7 +38,7 @@ import okhttp3.Response;
 /**
  * Created by wangjun on 2016/7/21.
  */
-public class ServerFragment extends BaseFragment implements View.OnClickListener{
+public class ChatFragment extends BaseFragment implements View.OnClickListener{
 
 
     public static final String TAG = "MoneyFragment";
