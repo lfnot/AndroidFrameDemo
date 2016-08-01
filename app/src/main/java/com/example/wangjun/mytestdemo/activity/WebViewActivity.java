@@ -83,8 +83,24 @@ public class WebViewActivity extends BaseActivity {
             if (null != url) {
                 content = url;
             }
-
-
+        }else if (item == 200){
+            setTitle("新闻");
+            String url = bundle.getString("url");
+            imageUrl = bundle.getString("imageUrl");
+            title = bundle.getString("title");
+            source = bundle.getString("content");
+            if (null != url) {
+                content = url;
+            }
+        }else if (item == 300){
+            String url = bundle.getString("url");
+            imageUrl = bundle.getString("imageUrl");
+            title = bundle.getString("title");
+            setTitle(title);
+            source = bundle.getString("content");
+            if (null != url) {
+                content = url;
+            }
         }
 
         // 设置支持JavaScript等

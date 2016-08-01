@@ -12,10 +12,10 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.wangjun.mytestdemo.R;
-import com.example.wangjun.mytestdemo.fragment.AlipayFragment;
+import com.example.wangjun.mytestdemo.fragment.Maingment;
 import com.example.wangjun.mytestdemo.fragment.ClothesFragment;
 import com.example.wangjun.mytestdemo.fragment.MoneyFragment;
-import com.example.wangjun.mytestdemo.fragment.ServerFragment;
+import com.example.wangjun.mytestdemo.fragment.ChatFragment;
 
 import java.io.File;
 
@@ -30,8 +30,8 @@ public class MainActivity extends BaseActivity {
     private LayoutInflater layoutInflater;
 
     //定义数组来存放Fragment界面
-    private Class fragmentArray[] = {AlipayFragment.class,ClothesFragment.class,
-            ServerFragment.class,MoneyFragment.class};
+    private Class fragmentArray[] = {Maingment.class,ClothesFragment.class,
+            ChatFragment.class,MoneyFragment.class};
 
     //定义数组来存放按钮图片
     private int mImageViewArray[] = {R.drawable.alipay_selector,
@@ -88,6 +88,27 @@ public class MainActivity extends BaseActivity {
             //设置tab按钮的背景
            /* mTabhost.getTabWidget().getChildAt(i).setBackgroundResource(mImageViewArray[i]);*/
         }
+
+        mTabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                switch (tabId) {
+                    case "首页":
+                        setTitle("首页");
+                        break;
+                    case "便笺":
+                        setTitle("便笺");
+                        break;
+                    case "聊天":
+                        setTitle("聊天");
+                        break;
+                    case "我的":
+                        setTitle("我的");
+                        break;
+
+                }
+            }
+        });
     }
 
     /*

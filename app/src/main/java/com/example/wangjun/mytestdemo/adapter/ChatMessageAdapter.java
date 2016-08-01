@@ -3,6 +3,7 @@ package com.example.wangjun.mytestdemo.adapter;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ import com.example.wangjun.mytestdemo.http.API;
 import com.example.wangjun.mytestdemo.utils.SpecialViewUtil;
 import com.example.wangjun.mytestdemo.utils.TimeUtil;
 import com.github.library.bubbleview.BubbleTextVew;
-
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class ChatMessageAdapter extends BaseListAdapter<MessageEntity> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = createViewByType(position);
         }
@@ -88,13 +88,25 @@ public class ChatMessageAdapter extends BaseListAdapter<MessageEntity> {
                 switch (entity.getCode()) {
 
                     case API.TulingCode.URL:
-                        Intent intent = new Intent(mContext, WebViewActivity.class);
-                        intent.putExtra("url", entity.getUrl());
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("item", 300);
+                        bundle.putString("url", entity.getUrl());
+                        bundle.putString("imageUrl",entity.getUrl());
+                        bundle.putString("title",entity.getText());
+                        bundle.putString("content",entity.getText());
+                        Intent intent  = new Intent(mContext, WebViewActivity.class);
+                        intent .putExtras(bundle);
                         mContext.startActivity(intent);
                         break;
                     case API.TulingCode.NEWS:
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putInt("item", 200);
+                        bundle2.putString("url", entity.getList().get(position).getDetailurl());
+                        bundle2.putString("imageUrl",entity.getList().get(position).getDetailurl());
+                        bundle2.putString("title","新闻");
+                        bundle2.putString("content",entity.getText());
                         Intent intent2 = new Intent(mContext, WebViewActivity.class);
-                        intent2.putExtra("url", entity.getUrl());
+                        intent2.putExtras(bundle2);
                         mContext.startActivity(intent2);
                         break;
                 }
