@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">鸡汤</string>
+
+    <string name="just_now">刚刚</string>
+    <string name="minuites_ago">分钟前</string>
+    <string name="hours_ago">小时前</string>
+    <string name="yestoday">昨天</string>
+    <string name="the_day_before_yestoday">前天</string>
+    <string name="days_ago">天前</string>
 </resources>

@@ -62,7 +62,7 @@ public abstract class BaseFragment extends Fragment {
 
 
         if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_base, null);
+            rootView = inflater.inflate(R.layout.fragment_base,container, false);
             rootContent = (FrameLayout) rootView.findViewById(R.id.content);
             mRlError = (RelativeLayout) rootView.findViewById(R.id.rl_error);
             mBaseProgress = (ProgressBar) rootView.findViewById(R.id.base_progress);
