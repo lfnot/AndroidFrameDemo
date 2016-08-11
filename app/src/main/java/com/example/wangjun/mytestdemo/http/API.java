@@ -18,6 +18,9 @@ public class API {
     //图灵机器人api-secret
     public static final String TULING_SECRET ="74a09ef02d3683bfONOFF";
 
+    //LOL
+    public static final String LOL = "http://lol.zhangyoubao.com/apis/rest/ItemsService/videos";
+
     public static class TulingCode {
         public static final int TEXT = 100000;//文本类数据
         public static final int URL = 200000;//网址类数据
