@@ -72,10 +72,12 @@
 
         <activity android:name=".activity.ShowFragmentActivity"/>
         <activity android:name=".activity.WebViewActivity"/>
-<!--
-        <activity android:name=".activity.VideoActivity"
-                  android:screenOrientation="portrait"
-            />-->
+
+        <activity
+            android:name=".activity.VideoActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
     </application>
 
 </manifest>

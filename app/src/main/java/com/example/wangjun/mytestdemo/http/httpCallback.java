@@ -26,6 +26,7 @@ public abstract class HttpCallback<T> extends AbsCallback<T> {
     private Class<T> clazz;
     private Type type;
 
+
     public  HttpCallback(Class<T> clazz){
         this.clazz = clazz;
     }
