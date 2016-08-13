@@ -1,3 +1,4 @@
+/*
 package com.example.wangjun.mytestdemo.widget;
 
 import android.app.Activity;
@@ -23,11 +24,13 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.utils.StringUtils;
 import io.vov.vitamio.widget.VideoView;
 
+*/
 /**
  * 作者：hequnsky on 2016/8/3 18:03
  * <p>
  * 邮箱：heuqnsky@gmail.com
- */
+ *//*
+
 public class VideoPlayController {
     private String mTitle;
     // 默认停留的时间
@@ -129,11 +132,13 @@ public class VideoPlayController {
         mHandler = null;
     }
 
-    /**
+    */
+/**
      * 设置进度条和时间
      *
      * @return
-     */
+     *//*
+
     private long setProgress() {
         if (mVideoView == null || mIsDraging) return 0;
 
@@ -339,3 +344,4 @@ public class VideoPlayController {
     }
 
 }
+*/
