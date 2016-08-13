@@ -4,18 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wangjun.mytestdemo.R;
-import com.example.wangjun.mytestdemo.fragment.Maingment;
-import com.example.wangjun.mytestdemo.fragment.ClothesFragment;
-import com.example.wangjun.mytestdemo.fragment.MoneyFragment;
 import com.example.wangjun.mytestdemo.fragment.ChatFragment;
+import com.example.wangjun.mytestdemo.fragment.ClothesFragment;
+import com.example.wangjun.mytestdemo.fragment.Maingment;
+import com.example.wangjun.mytestdemo.fragment.MoneyFragment;
 
 import java.io.File;
 
@@ -26,6 +28,7 @@ import okhttp3.Response;
 public class MainActivity extends BaseActivity {
 
 
+    private long mExitTime;
     //定义一个布局
     private LayoutInflater layoutInflater;
 
@@ -191,5 +194,20 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Object mHelperUtils;
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

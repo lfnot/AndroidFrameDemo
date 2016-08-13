@@ -1,7 +1,6 @@
 package com.example.wangjun.mytestdemo.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.example.wangjun.mytestdemo.R;
-import com.example.wangjun.mytestdemo.activity.VideoActivity;
 import com.example.wangjun.mytestdemo.adapter.LolAdapter;
 import com.example.wangjun.mytestdemo.entity.VideoBean;
 import com.example.wangjun.mytestdemo.http.API;
@@ -30,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -278,10 +277,7 @@ public class VideoFragment extends LazyFragment {
         mLolAdapter.setOnItemClickListener(new LolAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, VideoBean.DataEntity listBean) {
-                Intent intent = new Intent(mContext, VideoActivity.class);
-                intent.putExtra("Url", listBean.getVideo_url());
-                intent.putExtra("Title", listBean.getTitle());
-                startActivity(intent);
+                JCVideoPlayerStandard.startFullscreen(mContext, JCVideoPlayerStandard.class, listBean.getVideo_url(), listBean.getTitle());
             }
         });
     }
